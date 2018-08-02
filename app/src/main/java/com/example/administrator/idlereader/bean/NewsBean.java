@@ -7,6 +7,17 @@ import java.util.List;
  */
 
 public class NewsBean {
+    //汽车
+    private List<Bean> T1348654060988;
+
+    public List<Bean> getCar() {
+        return T1348654060988;
+    }
+
+    public void setT1348654060988(List<Bean> t1348654060988) {
+        T1348654060988 = t1348654060988;
+    }
+
     //头条
     private List<Bean> T1348647909107;
     public List<Bean> getTop() {
@@ -97,7 +108,7 @@ public class NewsBean {
         private String alias;
         private int hasAD;
         private String imgsrc;
-        private String ptime;
+        public String ptime;
         private String daynum;
         private int hasHead;
         private int imgType;
@@ -105,7 +116,7 @@ public class NewsBean {
         private int votecount;
         private boolean hasCover;
         private String docid;
-        private String tname;
+        public String tname;
         private int priority;
         private String ename;
         private int replyCount;

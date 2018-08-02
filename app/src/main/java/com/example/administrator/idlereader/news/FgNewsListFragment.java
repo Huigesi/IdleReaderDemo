@@ -24,7 +24,7 @@ import java.util.zip.CRC32;
 
 
 public class FgNewsListFragment extends Fragment implements INewsView {
-
+    private static final String TAG = "FgNewsListFragment";
     private NewsPresenter presenter;
     private int type;
     private SwipeRefreshLayout srl_news;
@@ -46,7 +46,6 @@ public class FgNewsListFragment extends Fragment implements INewsView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fg_news_list, null);
     }
 
@@ -54,7 +53,6 @@ public class FgNewsListFragment extends Fragment implements INewsView {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         type = getArguments().getInt("type");
-        presenter = new NewsPresenter(this);
         rv_news = view.findViewById(R.id.rv_news);
         adapter = new ItemNewsAdapter(getActivity());
         tv_news_list = view.findViewById(R.id.tv_news_list);
@@ -66,8 +64,8 @@ public class FgNewsListFragment extends Fragment implements INewsView {
                 presenter.loadNews(type, 0);
             }
         });
-        presenter.loadNews(type, 0);
-
+        presenter = new NewsPresenter(this);
+        Log.i(TAG, "onViewCreated: "+type);
         rv_news.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -77,6 +75,11 @@ public class FgNewsListFragment extends Fragment implements INewsView {
                 }
             }
         });
+            initData();
+    }
+
+    private void initData() {
+        presenter.loadNews(type, 0);
     }
 
     private void loadMore() {
@@ -90,11 +93,14 @@ public class FgNewsListFragment extends Fragment implements INewsView {
             case FgNewsFragment.NEWS_TYPE_TOP:
                 newsBeanList = newsBean.getTop();
                 break;
-            case FgNewsFragment.NEWS_TYPE_NBA:
+            case FgNewsFragment.NEWS_TYPE_CAR:
                 newsBeanList = newsBean.getNba();
                 break;
             case FgNewsFragment.NEWS_TYPE_JOKES:
                 newsBeanList = newsBean.getJoke();
+                break;
+            case FgNewsFragment.NEWS_TYPE_NBA:
+                newsBeanList = newsBean.getNba();
                 break;
         }
         Log.i("list", "showNews: " + newsBeanList.size());
@@ -114,8 +120,8 @@ public class FgNewsListFragment extends Fragment implements INewsView {
             case FgNewsFragment.NEWS_TYPE_TOP:
                 adapter.addData(newsBean.getTop());
                 break;
-            case FgNewsFragment.NEWS_TYPE_NBA:
-                adapter.addData(newsBean.getNba());
+            case FgNewsFragment.NEWS_TYPE_CAR:
+                adapter.addData(newsBean.getCar());
                 break;
             case FgNewsFragment.NEWS_TYPE_JOKES:
                 adapter.addData(newsBean.getJoke());

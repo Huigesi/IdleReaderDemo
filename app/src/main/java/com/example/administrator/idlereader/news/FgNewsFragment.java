@@ -17,9 +17,10 @@ import java.util.List;
 
 public class FgNewsFragment extends Fragment  {
 
-    public static final int NEWS_TYPE_TOP=0;
-    public static final int NEWS_TYPE_NBA = 1;
-    public static final int NEWS_TYPE_JOKES = 2;
+    public static final int NEWS_TYPE_TOP=3;
+    public static final int NEWS_TYPE_CAR = 2;
+    public static final int NEWS_TYPE_JOKES = 1;
+    public static final int NEWS_TYPE_NBA = 0;
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> fragmentTitles = new ArrayList<>();
     private TabLayout tl_news;
@@ -38,21 +39,22 @@ public class FgNewsFragment extends Fragment  {
         vp_news = (ViewPager) view.findViewById(R.id.vp_news);
         setViewPager();
         //预加载界面数
-        vp_news.setOffscreenPageLimit(2);
+        vp_news.setOffscreenPageLimit(3);
         tl_news.setupWithViewPager(vp_news);
     }
 
     private void setViewPager() {
-        fragments.add(FgNewsListFragment.newInstance(NEWS_TYPE_TOP));
         fragments.add(FgNewsListFragment.newInstance(NEWS_TYPE_NBA));
+        fragments.add(FgNewsListFragment.newInstance(NEWS_TYPE_CAR));
         fragments.add(FgNewsListFragment.newInstance(NEWS_TYPE_JOKES));
-        fragmentTitles.add("头条");
+        fragments.add(FgNewsListFragment.newInstance(NEWS_TYPE_TOP));
         fragmentTitles.add("NBA");
+        fragmentTitles.add("汽车");
         fragmentTitles.add("笑话");
+        fragmentTitles.add("头条");
         MyFragmentAdapter adapter=new MyFragmentAdapter(getChildFragmentManager(),
                 fragments,fragmentTitles);
         vp_news.setAdapter(adapter);
-
     }
 
 }
